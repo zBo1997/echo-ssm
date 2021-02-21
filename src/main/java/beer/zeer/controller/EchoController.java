@@ -17,14 +17,14 @@ public class EchoController {
 
     @GetMapping("/ping")
     public String echo() {
-        log.info("EchoController.echo [null] [pong]: /ping rsp");
+        logger.info(String.format("[%s] [%s] [%s] \n", "/ping", "pong", "ok"));
         return "pong";
     }
 
     @GetMapping("/ping/ioc")
     public String echoIOC() {
         String rsp = kv.getVal();
-        log.info("EchoController.echoIOC [null] [" + rsp + "]: /ping/ioc rsp");
+        logger.info(String.format("[%s] [%s] [%s] \n", "/ping/ioc", rsp, "ok"));
         return rsp;
     }
 
@@ -33,9 +33,15 @@ public class EchoController {
         SqlSession sqlSession = MybatisConfig.openSession();
         KVPairMapper mapper = sqlSession.getMapper(KVPairMapper.class);
         String rsp = mapper.echo("ping");
-        log.info("EchoController.echoDB [null] [" + rsp + "]: /ping/db rsp");
+        logger.info(String.format("[%s] [%s] [%s] \n", "/ping/db", rsp, "ok"));
         return rsp;
     }
 
-    Logger log = Logger.getLogger(this.getClass().getName());
+    @GetMapping("/security/ping")
+    public String echoSecurity() {
+        logger.info(String.format("[%s] [%s] [%s] \n", "/security/ping", "pong", "ok"));
+        return "pong";
+    }
+
+    Logger logger = Logger.getLogger(this.getClass().getName());
 }

@@ -5,12 +5,12 @@ import beer.zeer.entity.KVPair;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.logging.Logger;
 
-@SpringJUnitConfig(ContextConfig.class)
-@WebAppConfiguration
+@SpringJUnitWebConfig(ContextConfig.class)
 public class EchoControllerTest {
     @Autowired
     KVPair kv;
