@@ -2,11 +2,13 @@
 
 ### 发布了 看看做了哪些改动吧 
 
+```
 1/ jdbc   <-  mybatis (性能和使用便捷程度配置文件分离)   
 2/ Logger ->  TEST    (供给TEST环境下使用)  
-3/ IOC        x       (官方不建议持久化作为Bean)   
-4/ pom        war      (可以直接使用mvn package -f pom.xml)  
+3/ IOC        x       (官方没有搞懂持久化作为Bean)   
+4/ pom        war     (可以直接使用mvn package -f pom.xml)  
 5/ package    beer.zeer -> beer.zeer.echo  
+```
 
 ### 使用 
 
