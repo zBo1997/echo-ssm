@@ -7,6 +7,7 @@
     <groupId>beer.zeer</groupId>
     <artifactId>echo</artifactId>
     <version>0</version>
+    <packaging>war</packaging>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
