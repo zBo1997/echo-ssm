@@ -4,10 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.io.Serializable;
-
 @Table("pair")
-public class KVPair implements Serializable {
+public class KVPair {
     @Column("k") private @Id String key;
     @Column("v") private String val;
 

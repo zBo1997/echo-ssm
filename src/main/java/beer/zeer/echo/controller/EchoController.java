@@ -7,8 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class EchoController {
+@RestController public class EchoController {
     @Autowired KVPairDao kvPairDao;
 
     @GetMapping("/ping") public String echo() {
