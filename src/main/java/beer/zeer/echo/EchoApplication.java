@@ -11,10 +11,11 @@ import javax.servlet.*;
 import java.util.EnumSet;
 
 public class EchoApplication implements WebApplicationInitializer {
-    String springSecurityFilterChain = "springSecurityFilterChain"; // securityHandlerChainName
+
     @Override public void onStartup(ServletContext servletContext) {
         servletContext.setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
 
+        String springSecurityFilterChain = "springSecurityFilterChain";
         FilterRegistration.Dynamic securityFilter = servletContext.addFilter(springSecurityFilterChain,
                 new DelegatingFilterProxy(springSecurityFilterChain));
         securityFilter.setAsyncSupported(true);

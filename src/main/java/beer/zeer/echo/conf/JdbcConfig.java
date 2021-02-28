@@ -18,16 +18,23 @@ import java.util.logging.Logger;
 @Configuration
 @EnableJdbcRepositories("beer.zeer.echo")
 public class JdbcConfig {
-    @Bean public DataSource dataSource() throws IOException {
-        Properties properties = new Properties();
-        InputStream in = JdbcConfig.class.getClassLoader().getResourceAsStream("database-jdbc.properties");
-        properties.load(in);
-        DriverManagerDataSource dataSource = new DriverManagerDataSource(properties.getProperty("url"),
-                properties.getProperty("username"), properties.getProperty("password"));
-        dataSource.setDriverClassName(properties.getProperty("driver-class-name"));
-        logger.log(LoggerConfig.DEBUG, String.format("[load data source ok] [url:%s u:%s p:%s d:%s] \n", dataSource.getUrl(),
-                dataSource.getUsername(), dataSource.getPassword(), properties.getProperty("driver-class-name")));
-        return dataSource;
+    // database config file
+    InputStream in = JdbcConfig.class.getClassLoader().getResourceAsStream("database-jdbc.properties");
+
+    @Bean public DataSource dataSource() {
+        try{
+            Properties properties = new Properties();
+            properties.load(in);
+            DriverManagerDataSource dataSource = new DriverManagerDataSource(properties.getProperty("url"),
+                    properties.getProperty("username"), properties.getProperty("password"));
+            dataSource.setDriverClassName(properties.getProperty("driver-class-name"));
+            logger.log(LoggerConfig.DEBUG, String.format("[load data source ok] [url:%s u:%s p:%s d:%s]", dataSource.getUrl(),
+                    dataSource.getUsername(), dataSource.getPassword(), properties.getProperty("driver-class-name")));
+            return dataSource;
+        }catch (IOException e){
+            logger.log(LoggerConfig.DEBUG, String.format("[load data source failed] [e:%s]", e.toString()));
+            return null;
+        }
     }
 
     @Bean NamedParameterJdbcOperations namedParameterJdbcOperations(DataSource dataSource) {

@@ -14,6 +14,13 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    // table name custom
+    String userTable = "user_t";
+    String authTable = "auth_t";
+    // column name custom
+    String usernameColumn = "username";
+    String passwordColumn = "u_password";
+    String authorityColumn = "auth";
 
     @Bean public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -21,13 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired DataSource dataSource;
     @Autowired BCryptPasswordEncoder passwordEncoder;
-
-    String userTable = "user_t";
-    String authTable = "auth_t";
-
-    String usernameColumn = "username";
-    String passwordColumn = "u_password";
-    String authorityColumn = "auth";
 
     @Override public void configure(WebSecurity web) {
         web.ignoring()
