@@ -15,12 +15,12 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // table name custom
-    String userTable = "user_t";
-    String authTable = "auth_t";
+    String userTable = "users";
+    String authTable = "authorities";
     // column name custom
     String usernameColumn = "username";
-    String passwordColumn = "u_password";
-    String authorityColumn = "auth";
+    String passwordColumn = "password";
+    String authorityColumn = "authority";
 
     @Bean public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
