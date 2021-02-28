@@ -1,20 +1,43 @@
 package beer.zeer.echo.conf;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.sql.DataSource;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Autowired DataSource dataSource;
+    @Autowired BCryptPasswordEncoder passwordEncoder;
+
+    String userTable = "user_t";
+    String authTable = "auth_t";
+
+    String usernameColumn = "username";
+    String passwordColumn = "u_password";
+    String authorityColumn = "auth";
+
     @Override public void configure(WebSecurity web) {
         web.ignoring()
                 .antMatchers("/ping/**");
     }
 
     @Override protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user")
-                .password("password");
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery(String.format("SELECT %s,%s,1 as PLACEHOLDER FROM %s WHERE username = ?",
+                        usernameColumn,passwordColumn, userTable))
+                .authoritiesByUsernameQuery(String.format("SELECT %s,%s as PLACEHOLDER FROM %s WHERE username = ?",
+                        usernameColumn,authorityColumn, authTable))
+                .passwordEncoder(passwordEncoder);
     }
 }
